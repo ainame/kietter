@@ -1,0 +1,11 @@
+.form
+  == form_tag '/submit', :id => "tweet" do
+    == field_set_tag do 
+      .text_field
+        == text_field_tag :text, :name => "text"
+      .submit
+        == submit_tag 'つぶやく'
+.tweet_list
+  ul
+  - @list.each do |tweet|
+    li == tweet
