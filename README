@@ -1,0 +1,4 @@
+usage:
+
+$ bundle install
+$ rackup -p 3000
