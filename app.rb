@@ -38,7 +38,7 @@ class MyApp < Sinatra::Base
   end
 
   post '/submit' do 
-    value = CGI.encode params["text"]
+    value = CGI.escape params["text"]
     id = OpenSSL::Random.random_bytes(16).unpack("H*")[0] 
     settings.cache.set(id, value)
     list = settings.cache.get(KEY)
