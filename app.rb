@@ -19,6 +19,7 @@ class MyApp < Sinatra::Base
   end
 
   get '/' do 
+    @list = []
     response = settings.cache.get(KEY)
     if response
       key_list = response.split(",").delete_if{|x| x == ""}
@@ -26,8 +27,6 @@ class MyApp < Sinatra::Base
       new_key_list = hash.select{|v| v if v.to_s != ""}.keys.join(",")
       @list =  hash ? hash.values : []
       response = settings.cache.set(KEY,new_key_list)
-    else
-      @list = []
     end
     slim :index
   end
