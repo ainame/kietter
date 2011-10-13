@@ -1,4 +1,4 @@
-usage:
-
+* 使い方
+$ /usr/local/bin/memcached -d
 $ bundle install
 $ rackup -p 3000
