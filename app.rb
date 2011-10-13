@@ -12,7 +12,10 @@ require 'pp' if :development
 class MyApp < Sinatra::Base
   register Padrino::Helpers
   configure do 
-    cache = Dalli::Client.new(nil, { :expires_in => 60})
+    cache = Dalli::Client.new(ENV['MEMCACHE_SERVERS'],
+                              :username => ENV['MEMCACHE_USERNAME'],
+                              :password => ENV['MEMCACHE_PASSWORD'],
+                              :expires_in => 60)
     set :cache, cache
     set :public_folder, File.dirname(__FILE__) + '/public'
     Slim::Engine.set_default_options :pretty => true
