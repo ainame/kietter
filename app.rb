@@ -15,7 +15,7 @@ class MyApp < Sinatra::Base
     set :cache, cache
     set :public_folder, File.dirname(__FILE__) + '/public'
     Slim::Engine.set_default_options :pretty => true
-    KEY = "list"
+    KEY = "key_list"
   end
 
   get '/' do 
@@ -34,15 +34,10 @@ class MyApp < Sinatra::Base
 
   post '/submit' do 
     value = params["text"]
-    id = OpenSSL::Random.random_bytes(16).unpack("H*")[0] 
-    settings.cache.set(id, value)
+    key = OpenSSL::Random.random_bytes(16).unpack("H*")[0] 
+    settings.cache.set(key, value)
     list = settings.cache.get(KEY)
-    if list.nil?
-      list = id
-    else
-      list = list + "," + id
-    end
-    
+    list = list.nil? ? key : list + "," + key  
     settings.cache.set(KEY,list)
 
     redirect '/'
