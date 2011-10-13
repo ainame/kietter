@@ -20,19 +20,15 @@ class MyApp < Sinatra::Base
 
   get '/' do 
     response = settings.cache.get(KEY)
-    @list = []
-    unless response.nil?
+    if response
       key_list = response.split(",").delete_if{|x| x == ""}
-      new_key_list = ""
-      key_list.each do |key|
-        if value = settings.cache.get(key)
-          @list.push value
-          new_key_list = new_key_list + "," + key
-        end
-      end
+      hash = settings.cache.get_multi(key_list)
+      new_key_list = hash.select{|v| v if v.to_s != ""}.keys.join(",")
+      @list =  hash ? hash.values : []
       response = settings.cache.set(KEY,new_key_list)
+    else
+      @list = []
     end
-    
     slim :index
   end
 
