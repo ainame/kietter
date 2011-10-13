@@ -4,10 +4,6 @@ require 'padrino-helpers'
 require 'openssl'
 require 'dalli'
 require 'slim'
-require 'cgi'
-require 'sinatra/reloader' if :development
-require 'pp' if :development
-
 
 class MyApp < Sinatra::Base
   register Padrino::Helpers
